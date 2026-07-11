@@ -79,7 +79,7 @@ const Skills = () => {
                     <category.icon className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl">{category.title}</CardTitle>
+                    <CardTitle as="h2" className="text-xl">{category.title}</CardTitle>
                     <p className="text-sm text-muted-foreground mt-1">
                       {category.description}
                     </p>

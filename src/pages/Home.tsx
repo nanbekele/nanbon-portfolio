@@ -108,6 +108,13 @@ const Home = () => {
               </Button>
 
               <Button size="lg" variant="outline" asChild>
+                <a href="/files/pdf/Nanbon_Bekele_CV.pdf" download>
+                  <Download className="h-5 w-5 mr-2" />
+                  Download CV
+                </a>
+              </Button>
+
+              <Button size="lg" variant="outline" asChild>
                 <Link to="/contact">
                   <ArrowRight className="h-5 w-5 mr-2" />
                   Get In Touch
@@ -266,9 +273,11 @@ const Home = () => {
                 </Link>
               </Button>
 
-              <Button size="lg" variant="outline">
-                <Download className="h-5 w-5 mr-2" />
-                Download Resume
+              <Button size="lg" variant="outline" asChild>
+                <a href="/files/pdf/Nanbon_Bekele_CV.pdf" download>
+                  <Download className="h-5 w-5 mr-2" />
+                  Download Resume
+                </a>
               </Button>
             </div>
           </div>

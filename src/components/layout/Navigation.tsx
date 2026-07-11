@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Home, User, Code, Briefcase, Mail, Moon, Sun } from 'lucide-react';
+import { Menu, X, Home, User, Code, Briefcase, Mail, Moon, Sun, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navigation = () => {
@@ -9,13 +9,15 @@ const Navigation = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Check for saved theme preference
+    // Check for saved theme preference, defaulting to dark
     const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+    if (savedTheme !== 'light') {
       setDarkMode(true);
       document.documentElement.classList.add('dark');
+    } else {
+      setDarkMode(false);
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 
@@ -69,17 +71,31 @@ const Navigation = () => {
               </Link>
             ))}
             
+            {/* Download Resume */}
+            <Button
+              variant="outline"
+              size="sm"
+              asChild
+              className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white transition-all"
+            >
+              <a href="/files/pdf/Nanbon_Bekele_CV.pdf" download>
+                <Download size={14} className="mr-2" />
+                Resume
+              </a>
+            </Button>
+            
             {/* Dark Mode Toggle */}
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
               className="p-2"
+              aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </Button>
           </div>
-
+ 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
             <Button
@@ -87,6 +103,7 @@ const Navigation = () => {
               size="sm"
               onClick={toggleDarkMode}
               className="p-2"
+              aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </Button>
@@ -95,6 +112,7 @@ const Navigation = () => {
               variant="ghost"
               onClick={() => setIsOpen(!isOpen)}
               className="p-2"
+              aria-label="Toggle navigation menu"
             >
               {isOpen ? <X size={20} /> : <Menu size={20} />}
             </Button>
@@ -120,6 +138,21 @@ const Navigation = () => {
                   <span>{item.name}</span>
                 </Link>
               ))}
+
+              {/* Mobile Download Resume */}
+              <div className="pt-2 pb-1 px-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="w-full justify-center border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white transition-all"
+                >
+                  <a href="/files/pdf/Nanbon_Bekele_CV.pdf" download>
+                    <Download size={16} className="mr-2" />
+                    Download CV
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
         )}

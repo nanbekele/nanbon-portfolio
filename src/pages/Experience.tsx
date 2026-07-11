@@ -130,7 +130,7 @@ const Experience = () => {
                     <CardHeader>
                       <div className="flex items-start justify-between mb-2">
                         <div>
-                          <CardTitle className="text-xl">{exp.title}</CardTitle>
+                          <CardTitle as="h2" className="text-xl">{exp.title}</CardTitle>
                           <p className="text-brand-primary font-medium">{exp.company}</p>
                         </div>
                         <Badge variant="outline" className="text-xs">

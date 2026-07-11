@@ -233,7 +233,7 @@ const Projects = () => {
                       <div className="p-2 rounded-lg bg-brand-primary/10">
                         <project.icon className="h-5 w-5 text-brand-primary" />
                       </div>
-                      <CardTitle className="text-2xl">{project.title}</CardTitle>
+                      <CardTitle as="h2" className="text-2xl">{project.title}</CardTitle>
                     </div>
                     <p className="text-muted-foreground">
                       {project.description}
@@ -293,7 +293,7 @@ const Projects = () => {
         {/* Call to Action */}
         <div className="text-center mt-16 animate-fade-in" style={{ animationDelay: '800ms' }}>
           <div className="portfolio-card p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Interested in Working Together?</h3>
+            <h2 className="text-2xl font-bold mb-4">Interested in Working Together?</h2>
             <p className="text-muted-foreground mb-6">
               I'm always excited to work on new challenges and bring innovative ideas to life.
             </p>

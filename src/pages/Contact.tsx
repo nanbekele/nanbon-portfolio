@@ -142,7 +142,7 @@ const Contact = () => {
             </Card>
             <Card className="portfolio-card mb-8">
               <CardHeader>
-                <CardTitle className="text-2xl">Get in Touch</CardTitle>
+                <CardTitle as="h2" className="text-2xl">Get in Touch</CardTitle>
                 <p className="text-muted-foreground">
                   I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology.
                 </p>
@@ -174,7 +174,7 @@ const Contact = () => {
             {/* Social Links */}
             <Card className="portfolio-card mb-8">
               <CardHeader>
-                <CardTitle>Connect with Me</CardTitle>
+                <CardTitle as="h2">Connect with Me</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex space-x-4">
@@ -213,7 +213,7 @@ const Contact = () => {
           <div className="animate-slide-in-right">
             <Card className="portfolio-card">
               <CardHeader>
-                <CardTitle className="text-2xl">Send a Message</CardTitle>
+                <CardTitle as="h2" className="text-2xl">Send a Message</CardTitle>
                 <p className="text-muted-foreground">
                   Have a project in mind? Fill out the form below and I'll get back to you within 24 hours.
                 </p>
@@ -288,7 +288,7 @@ const Contact = () => {
         {/* Call to Action */}
         <div className="text-center mt-16 animate-fade-in" style={{ animationDelay: '600ms' }}>
           <div className="portfolio-card p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Ready to Start Your Project?</h3>
+            <h2 className="text-2xl font-bold mb-4">Ready to Start Your Project?</h2>
             <p className="text-muted-foreground mb-6">
               Whether you need a web application, mobile app, or data analysis solution, I'm here to help bring your vision to life.
             </p>

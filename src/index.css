@@ -38,7 +38,7 @@ All colors MUST be HSL.
     --secondary-foreground: 220 15% 15%;
 
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 215.4 16.3% 40%;
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
@@ -127,6 +127,12 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-inter;
+  }
+
+  /* Keyboard focus styles for accessibility */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--brand-primary));
+    outline-offset: 2px;
   }
 }
 
