@@ -201,9 +201,11 @@ const Contact = () => {
                 <p className="text-sm text-muted-foreground mb-4">
                   Download my resume for a detailed overview of my experience and skills.
                 </p>
-                <Button variant="outline" className="w-full">
-                  <Download className="h-4 w-4 mr-2" />
-                  Download Resume
+                <Button variant="outline" className="w-full" asChild>
+                  <a href="/files/pdf/Nanbon_Bekele_CV.pdf" download>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download Resume
+                  </a>
                 </Button>
               </CardContent>
             </Card>
@@ -293,11 +295,10 @@ const Contact = () => {
               Whether you need a web application, mobile app, or data analysis solution, I'm here to help bring your vision to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="portfolio-gradient text-white">
-                Schedule a Call
-              </Button>
-              <Button size="lg" variant="outline">
-                View My Work
+              <Button size="lg" variant="outline" asChild>
+                <a href="/projects">
+                  View My Work
+                </a>
               </Button>
             </div>
           </div>

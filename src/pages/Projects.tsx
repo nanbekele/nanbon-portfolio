@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Smartphone, CreditCard, Palette, Download, BookOpen, Building2 } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Smartphone, CreditCard, Palette, Download, BookOpen, Building2, X, ZoomIn } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -14,12 +14,104 @@ import learnXchangeImage from '@/assets/project-learnxchange.png';
 import gcaeVisionHubImage from '@/assets/project-gcae-vision-hub.png';
 import flutterAppImage from '@/assets/project-flutter-app.jpg';
 
+/* ─── Image Lightbox Modal ─── */
+const ImageLightbox = ({
+  images,
+  currentIndex,
+  onClose,
+}: {
+  images: string[];
+  currentIndex: number;
+  onClose: () => void;
+}) => {
+  const [index, setIndex] = React.useState(currentIndex);
+
+  const goPrev = React.useCallback(() => {
+    setIndex((i) => (i <= 0 ? images.length - 1 : i - 1));
+  }, [images.length]);
+
+  const goNext = React.useCallback(() => {
+    setIndex((i) => (i >= images.length - 1 ? 0 : i + 1));
+  }, [images.length]);
+
+  // Keyboard navigation
+  React.useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') goPrev();
+      if (e.key === 'ArrowRight') goNext();
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose, goPrev, goNext]);
+
+  // Lock body scroll while open
+  React.useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm animate-fade-in"
+      onClick={onClose}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 z-[110] p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+        aria-label="Close lightbox"
+      >
+        <X className="h-6 w-6" />
+      </button>
+
+      {/* Image counter */}
+      <div className="absolute top-4 left-4 z-[110] text-white/70 text-sm font-medium bg-black/40 px-3 py-1 rounded-full">
+        {index + 1} / {images.length}
+      </div>
+
+      {/* Previous button */}
+      {images.length > 1 && (
+        <button
+          onClick={(e) => { e.stopPropagation(); goPrev(); }}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all hover:scale-110"
+          aria-label="Previous image"
+        >
+          <ArrowLeft className="h-6 w-6" />
+        </button>
+      )}
+
+      {/* Next button */}
+      {images.length > 1 && (
+        <button
+          onClick={(e) => { e.stopPropagation(); goNext(); }}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all hover:scale-110"
+          aria-label="Next image"
+        >
+          <ArrowRight className="h-6 w-6" />
+        </button>
+      )}
+
+      {/* Image */}
+      <img
+        src={images[index]}
+        alt={`Image ${index + 1}`}
+        className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      />
+    </div>
+  );
+};
+
+/* ─── Project Images Carousel ─── */
 const ProjectImagesCarousel = ({
   images,
   title,
+  onImageClick,
 }: {
   images: string[];
   title: string;
+  onImageClick: (index: number) => void;
 }) => {
   const [api, setApi] = React.useState<any>(null);
 
@@ -37,20 +129,29 @@ const ProjectImagesCarousel = ({
         <CarouselContent className="h-full">
           {images.map((src, index) => (
             <CarouselItem key={`${src}-${index}`} className="h-full">
-              <div className="h-full w-full flex items-center justify-center bg-muted/10 p-2">
+              <div
+                className="h-full w-full flex items-center justify-center bg-muted/10 p-2 cursor-pointer group/slide"
+                onClick={() => onImageClick(index)}
+              >
                 <img
                   src={src}
                   alt={`${title} - Slide ${index + 1}`}
                   className="max-h-full max-w-full object-contain"
                   loading="lazy"
                 />
+                {/* Zoom hint overlay */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/slide:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  <div className="p-3 rounded-full bg-black/50 text-white">
+                    <ZoomIn className="h-6 w-6" />
+                  </div>
+                </div>
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
 
-        <CarouselPrevious className="left-3 top-1/2 -translate-y-1/2" />
-        <CarouselNext className="right-3 top-1/2 -translate-y-1/2" />
+        <CarouselPrevious className="left-3 top-1/2 -translate-y-1/2 z-10" />
+        <CarouselNext className="right-3 top-1/2 -translate-y-1/2 z-10" />
       </Carousel>
     </div>
   );
@@ -58,6 +159,7 @@ const ProjectImagesCarousel = ({
 
 const Projects = () => {
   const [designImages, setDesignImages] = React.useState<string[]>([]);
+  const [lightbox, setLightbox] = React.useState<{ images: string[]; index: number } | null>(null);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -211,19 +313,32 @@ const Projects = () => {
                 {/* Project Image */}
                 <div className={`relative group overflow-hidden ${index % 2 === 1 ? 'lg:col-start-2' : ''} h-64 lg:h-[420px]`}>
                   {'images' in project && Array.isArray((project as any).images) && (project as any).images.length > 0 ? (
-                    <ProjectImagesCarousel images={(project as any).images as string[]} title={project.title} />
+                    <ProjectImagesCarousel
+                      images={(project as any).images as string[]}
+                      title={project.title}
+                      onImageClick={(imgIndex) => setLightbox({ images: (project as any).images, index: imgIndex })}
+                    />
                   ) : 'images' in project ? (
                     <div className="w-full h-full bg-muted/20" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-muted/10 p-2">
+                    <div
+                      className="w-full h-full flex items-center justify-center bg-muted/10 p-2 cursor-pointer group/single"
+                      onClick={() => setLightbox({ images: [(project as any).image], index: 0 })}
+                    >
                       <img 
                         src={(project as any).image} 
                         alt={project.title}
                         className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
                       />
+                      {/* Zoom hint */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/single:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                        <div className="p-3 rounded-full bg-black/50 text-white">
+                          <ZoomIn className="h-6 w-6" />
+                        </div>
+                      </div>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 </div>
 
                 {/* Project Content */}
@@ -307,6 +422,15 @@ const Projects = () => {
           </div>
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      {lightbox && (
+        <ImageLightbox
+          images={lightbox.images}
+          currentIndex={lightbox.index}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </div>
   );
 };
