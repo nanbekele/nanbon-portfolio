@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Home, User, Code, Briefcase, Mail, Moon, Sun, Download } from 'lucide-react';
+import { Menu, X, Home, User, Code, Briefcase, Mail, Moon, Sun, Download, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navigation = () => {
@@ -37,6 +37,7 @@ const Navigation = () => {
     { name: 'Skills', href: '/skills', icon: Code },
     { name: 'Projects', href: '/projects', icon: Briefcase },
     { name: 'Experience', href: '/experience', icon: User },
+    { name: 'Certifications', href: '/certifications', icon: Award },
     { name: 'Contact', href: '/contact', icon: Mail },
   ];
 
@@ -55,7 +56,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}

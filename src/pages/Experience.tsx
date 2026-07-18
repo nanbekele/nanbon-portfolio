@@ -1,5 +1,4 @@
 import React from 'react';
-import { Award, GraduationCap } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -46,50 +45,6 @@ const Experience = () => {
     }
   ];
 
-  const certifications = [
-    {
-      title: 'B.Sc. in Software Engineering',
-      issuer: 'University Graduate',
-      date: 'Graduated',
-      icon: GraduationCap
-    },
-    {
-      title: 'University Graduation Expo Project Presentation',
-      issuer: 'University Expo',
-      date: '',
-      icon: Award
-    },
-    {
-      title: 'Android Development',
-      issuer: 'Ethio Coders',
-      date: '',
-      icon: Award
-    },
-    {
-      title: 'Data Analysis',
-      issuer: 'Ethio Coders',
-      date: '',
-      icon: Award
-    },
-    {
-      title: 'Artificial Intelligence',
-      issuer: 'Ethio Coders',
-      date: '',
-      icon: Award
-    },
-    {
-      title: 'Fundamental Programming',
-      issuer: 'Ethio Coders',
-      date: '',
-      icon: Award
-    },
-    {
-      title: 'e-SHE (E-Learning for Strengthening Higher Education)',
-      issuer: 'e-SHE Initiative',
-      date: '',
-      icon: Award
-    }
-  ];
 
   return (
     <div className="min-h-screen py-20">
@@ -180,33 +135,6 @@ const Experience = () => {
           </div>
         </div>
 
-        {/* Certifications Section */}
-        <div className="mt-20 animate-fade-in" style={{ animationDelay: '800ms' }}>
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Certifications &
-            <span className="bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent">
-              {' '}Education
-            </span>
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {certifications.map((cert, index) => (
-              <Card
-                key={index}
-                className="portfolio-card text-center hover:portfolio-glow transition-all duration-300"
-              >
-                <CardContent className="p-6">
-                  <div className="mb-4">
-                    <cert.icon className="h-8 w-8 text-brand-primary mx-auto" />
-                  </div>
-                  <h3 className="font-semibold mb-2">{cert.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-1">{cert.issuer}</p>
-                  {cert.date && <p className="text-xs text-brand-primary">{cert.date}</p>}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
