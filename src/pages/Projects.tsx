@@ -272,14 +272,6 @@ const Projects = () => {
         {
           label: 'Download Vision Hub (PPTX)',
           href: '/files/ppt/ppt-design/1vision%20hub1.pptx'
-        },
-        {
-          label: 'Download HCI Assignment (PPTX)',
-          href: '/files/ppt/ppt-design/HCI-G-Assignment.pptx'
-        },
-        {
-          label: 'Download Mobile (PPTX)',
-          href: '/files/ppt/ppt-design/mobile.pptx'
         }
       ]
     }
